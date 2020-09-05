@@ -1,0 +1,50 @@
+---
+- hosts: all
+  remote_user: sysreport
+  tasks:
+     - name: Download File Node_Exporter
+       get_url:
+        url: https://github.com/prometheus/node_exporter/releases/download/v0.18.1/node_exporter-0.18.1.linux-amd64.tar.gz
+        dest: /tmp
+
+     - name: Extract files
+       unarchive:
+        src: /tmp/node_exporter-0.18.1.linux-amd64.tar.gz
+        dest: /tmp
+
+     - name: Move extracted files
+       command: mv /tmp/node_exporter-0.18.1.linux-amd64 /var/lib/node_exporter
+
+     - name: Create a systemd service for node_exporter
+       file:
+        path: /etc/systemd/system/node_exporter.service
+        state: touch
+
+     - name: Edit Text in File
+       blockinfile:
+        path: /etc/systemd/system/node_exporter.service
+        block: |
+         [Unit]
+         Description=Node Exporter
+         Wants=network-online.target
+         After=network-online.target
+
+         [Service]
+         User=root
+         Type=simple
+         ExecStart=/var/lib/node_exporter/node_exporter
+
+         [Install]
+         WantedBy=multi-user.target
+
+     - name: Enable and start node_exporter service
+       systemd:
+         name: node_exporter
+         state: started
+         enabled: yes
+
+     - name: Firewalld Add Port
+       firewalld:
+         port: 9100/tcp
+         permanent: yes
+         state: enabled
