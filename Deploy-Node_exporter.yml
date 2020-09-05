@@ -2,10 +2,16 @@
 - hosts: all
   remote_user: sysreport
   tasks:
-     - name: Download File Node_Exporter
-       get_url:
-        url: https://github.com/prometheus/node_exporter/releases/download/v0.18.1/node_exporter-0.18.1.linux-amd64.tar.gz
+#     - name: Download File Node_Exporter
+#       get_url:
+#        url: https://github.com/prometheus/node_exporter/releases/download/v0.18.1/node_exporter-0.18.1.linux-amd64.tar.gz
+#        dest: /tmp
+
+     - name: Copy File From Host
+       copy:
+        src: /tmp/node_exporter-0.18.1.linux-amd64.tar.gz
         dest: /tmp
+        remote_src: no
 
      - name: Extract files
        unarchive:
