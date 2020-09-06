@@ -11,10 +11,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-        
+       
       - name: Lint Ansible Playbook
         uses: ansible/ansible-lint-action@master
         with:
           targets: | 
             Deploy-Node_exporter.yml
-          args: -x '301' '305'
+          args: -x "301" "305"
