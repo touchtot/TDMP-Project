@@ -7,11 +7,10 @@ on:
   pull_request:
     branches: [ master ]
 jobs:
-  build:
+  check-code:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-       
       - name: Lint Ansible Playbook
         uses: ansible/ansible-lint-action@master
         with:
