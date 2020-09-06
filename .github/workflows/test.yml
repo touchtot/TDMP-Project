@@ -17,5 +17,5 @@ jobs:
         with:
           targets: | 
             Deploy-Node_exporter.yml
-          args: |
-          skip_list: "301"
+          args: ""
+          skip_list: 301
