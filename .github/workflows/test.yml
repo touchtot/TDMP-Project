@@ -13,11 +13,8 @@ jobs:
       - uses: actions/checkout@v2
         
       - name: Lint Ansible Playbook
-        uses: ansible/ansible-lint-action@master
+        uses: ansible/ansible-lint-action@4.1.0
         with:
           targets: | 
             Deploy-Node_exporter.yml
-            Exchange-SSH.yml
-          args: -R
-            
-            
+          args: -x '301' '305'
