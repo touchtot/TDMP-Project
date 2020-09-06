@@ -6,19 +6,15 @@
        copy:
         src: /tmp/node_exporter-0.18.1.linux-amd64.tar.gz
         dest: /tmp
-        owner: root
-        group: root
         mode: "0777"
         remote_src: no
      - name: Extract files
        unarchive:
         src: /tmp/node_exporter-0.18.1.linux-amd64.tar.gz
         dest: /tmp
-        owner: root
-        group: root
         mode: "0777"
      - name: Move extracted files
-       shell: mv -f /tmp/node_exporter-0.18.1.linux-amd64 /var/lib/node_exporter
+       command: mv -f /tmp/node_exporter-0.18.1.linux-amd64 /var/lib/node_exporter
        arg:
         creates: /var/lib/node_exporter
      - name: Create a systemd service for node_exporter
