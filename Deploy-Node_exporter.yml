@@ -15,8 +15,6 @@
         mode: "0777"
      - name: Move extracted files
        command: mv -f /tmp/node_exporter-0.18.1.linux-amd64 /var/lib/node_exporter
-       arg:
-        creates: /var/lib/node_exporter
      - name: Create a systemd service for node_exporter
        file:
         path: /etc/systemd/system/node_exporter.service
@@ -52,6 +50,6 @@
          state: enable
      - name: Stop Zabbix Service
        systemd:
-        name: zabbix_agent
-        state: stopped
-        enabled: no
+         name: zabbix_agent
+         state: stopped
+         enabled: no
