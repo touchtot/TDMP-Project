@@ -16,4 +16,4 @@ jobs:
         uses: ansible/ansible-lint-action@master
         with:
           targets: Deploy-Node_exporter.yml
-          args: -x '301'
+          args: -x 301
