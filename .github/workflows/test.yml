@@ -17,4 +17,5 @@ jobs:
         with:
           targets: | 
             Deploy-Node_exporter.yml
-          args: -x "301" "305"
+          args: |
+          skip_list: "301"
