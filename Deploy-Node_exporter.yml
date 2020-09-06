@@ -54,3 +54,10 @@
          port: 9100/tcp
          permanent: yes
          state: enabled
+         
+    
+#    - name: Stop Zabbix Service
+#       systemd:
+#        name: zabbix_agent
+#        state: stopped
+#        enabled: no
