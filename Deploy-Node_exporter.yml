@@ -2,21 +2,20 @@
 - hosts: all
   remote_user: sysreport
   tasks:
-#     - name: Download File Node_Exporter
-#       get_url:
-#        url: https://github.com/prometheus/node_exporter/releases/download/v0.18.1/node_exporter-0.18.1.linux-amd64.tar.gz
-#        dest: /tmp
-
      - name: Copy File From Host
        copy:
         src: /tmp/node_exporter-0.18.1.linux-amd64.tar.gz
         dest: /tmp
+        owner: root
+        group: root
         remote_src: no
 
      - name: Extract files
        unarchive:
         src: /tmp/node_exporter-0.18.1.linux-amd64.tar.gz
         dest: /tmp
+        owner: root
+        group: root
 
      - name: Move extracted files
        command: mv /tmp/node_exporter-0.18.1.linux-amd64 /var/lib/node_exporter
@@ -25,7 +24,9 @@
        file:
         path: /etc/systemd/system/node_exporter.service
         state: touch
-
+        owner: root
+        group: root
+      
      - name: Edit Text in File
        blockinfile:
         path: /etc/systemd/system/node_exporter.service
@@ -55,9 +56,8 @@
          permanent: yes
          state: enabled
          
-    
-#    - name: Stop Zabbix Service
-#       systemd:
-#        name: zabbix_agent
-#        state: stopped
-#        enabled: no
+     - name: Stop Zabbix Service
+       systemd:
+        name: zabbix_agent
+        state: stopped
+        enabled: no
