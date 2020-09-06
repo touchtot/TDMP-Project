@@ -9,27 +9,23 @@
         owner: root
         group: root
         mode: "0777"
-        remote_src: no
-        
+        remote_src: no 
      - name: Extract files
        unarchive:
         src: /tmp/node_exporter-0.18.1.linux-amd64.tar.gz
         dest: /tmp
         owner: root
         group: root
-        mode: "0777"
-        
+        mode: "0777" 
      - name: Move extracted files
-       command: mv /tmp/node_exporter-0.18.1.linux-amd64 /var/lib/node_exporter
-       
+       shell: mv -f /tmp/node_exporter-0.18.1.linux-amd64 /var/lib/node_exporter
      - name: Create a systemd service for node_exporter
        file:
         path: /etc/systemd/system/node_exporter.service
         state: touch
         owner: root
         group: root
-        mode: "0700"
-        
+        mode: "0700" 
      - name: Edit Text in File
        blockinfile:
         path: /etc/systemd/system/node_exporter.service
@@ -52,13 +48,11 @@
          name: node_exporter
          state: started
          enabled: yes
-         
      - name: Firewalld Add Port
        firewalld:
          port: 9100/tcp
          permanent: yes
          state: enable
-         
      - name: Stop Zabbix Service
        systemd:
         name: zabbix_agent
