@@ -15,7 +15,5 @@ jobs:
       - name: Lint Ansible Playbook
         uses: ansible/ansible-lint-action@master
         with:
-          targets: | 
-            Deploy-Node_exporter.yml
-          args: ""
-          skip_list: 301
+          targets: Deploy-Node_exporter.yml
+          args: -x '301'
