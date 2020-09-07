@@ -41,7 +41,7 @@
          [Install]
          WantedBy=default.target
      - name: Enable and start node_exporter service
-       systemd:
+       service:
          name: node_exporter
          state: started
          enabled: yes
@@ -51,7 +51,7 @@
          permanent: yes
          state: enabled
      - name: Stop Zabbix Service
-       systemd:
+       service:
          name: zabbix-agent
          state: stopped
          enabled: no
