@@ -14,7 +14,9 @@
         dest: /tmp
         mode: "0777"
      - name: Move extracted files
-       command: mv -f /tmp/node_exporter-0.18.1.linux-amd64 /var/lib/node_exporter
+       shell: mv -f /tmp/node_exporter-0.18.1.linux-amd64 /var/lib/node_exporter
+       args:
+        creates: /var/lib/node_exporter
      - name: Create a systemd service for node_exporter
        file:
         path: /etc/systemd/system/node_exporter.service
@@ -37,7 +39,7 @@
          ExecStart=/var/lib/node_exporter/node_exporter
 
          [Install]
-         WantedBy=multi-user.target
+         WantedBy=default.target
      - name: Enable and start node_exporter service
        systemd:
          name: node_exporter
