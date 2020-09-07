@@ -47,9 +47,9 @@
        firewalld:
          port: 9100/tcp
          permanent: yes
-         state: enable
+         state: enabled
      - name: Stop Zabbix Service
        systemd:
-         name: zabbix_agent
+         name: zabbix-agent
          state: stopped
          enabled: no
