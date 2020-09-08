@@ -1,20 +1,19 @@
 ---
 - hosts: all
-  remote_user: sysreport
   tasks:
      - name: Copy File From Host
        copy:
         src: /tmp/node_exporter-0.18.1.linux-amd64.tar.gz
-        dest: /tmp
+        dest: /home/pamuser
         mode: "0777"
         remote_src: no
      - name: Extract files
        unarchive:
-        src: /tmp/node_exporter-0.18.1.linux-amd64.tar.gz
-        dest: /tmp
+        src: /home/pamuser/node_exporter-0.18.1.linux-amd64.tar.gz
+        dest: /home/pamuser
         mode: "0777"
      - name: Move extracted files
-       command: mv -f /tmp/node_exporter-0.18.1.linux-amd64 /var/lib/node_exporter
+       command: mv -f /home/pamuser/node_exporter-0.18.1.linux-amd64 /var/lib/node_exporter
        args:
         creates: /var/lib/node_exporter
      - name: Create a systemd service for node_exporter
