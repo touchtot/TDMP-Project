@@ -4,6 +4,6 @@
   tasks:
     - name: Set authorized key taken from file
       authorized_key:
-        user: sysreport
+        user: pamuser
         state: present
-        key: "{{ lookup('file', '/root/.ssh/id_rsa.pub') }}"
+        key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/id_rsa.pub') }}"
