@@ -1,0 +1,52 @@
+---
+- hosts: all
+  tasks:
+     - name: Copy File From Host
+       copy:
+        src: /mnt/d/Git/node_exporter-1.0.1.linux-amd64.tar.gz
+        dest: /home/cdnedge
+        mode: "0777"
+        remote_src: no
+     - name: Extract files
+       unarchive:
+        src: /home/cdnedge/node_exporter-1.0.1.linux-amd64.tar.gz
+        dest: /home/cdnedge
+        mode: "0777"
+        remote_src: yes
+     - name: Move extracted files
+       command: mv -f /home/cdnedge/node_exporter-1.0.1.linux-amd64 /var/lib/node_exporter
+       args:
+        creates: /var/lib/node_exporter
+     - name: Create a systemd service for node_exporter
+       file:
+        path: /etc/systemd/system/node_exporter.service
+        state: touch
+        owner: cdnedge
+        mode: "0777"
+     - name: Edit Text in File
+       blockinfile:
+        path: /etc/systemd/system/node_exporter.service
+        block: |
+         [Unit]
+         Description=Node Exporter
+         Wants=network-online.target
+         After=network-online.target
+
+         [Service]
+         User=cdnedge
+         Type=simple
+         ExecStart=/var/lib/node_exporter/node_exporter
+
+         [Install]
+         WantedBy=default.target
+     - name: Enable and start node_exporter service
+       service:
+         name: node_exporter
+         state: started
+         enabled: yes
+     - name: Firewalld Add Port
+       firewalld:
+         port: 9100/tcp
+         permanent: yes
+         immediate: yes
+         state: enabled

@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prometheus-deploy-v1
+  namespace: monitoring
+  labels:
+    app: prometheus
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: prometheus
+  template:
+    metadata:
+      labels:
+        app: prometheus
+    spec:
+      containers:
+      - name: prometheus
+        image: prom/prometheus:v2.20.0
+        ports:
+          - containerPort: 9090
+        volumeMounts:
+          - name: prom-config
+            mountPath: /etc/prometheus
+          - name: prom-data
+            mountPath: /prometheus
+      volumes:
+        - name: prom-config
+          persistentVolumeClaim:
+            claimName: prom-pvc
+        - name: prom-data
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: prometheus-service-v1
+  namespace: monitoring
+  labels:
+    app: prometheus
+spec:
+  type: ClusterIP
+  selector:
+    app: prometheus
+  ports:
+    - protocol: TCP
+      port: 9090
+      targetPort: 9090
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: prometheus-deploy-v1
+  namespace: monitoring
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: prometheus-deploy-v1
+  minReplicas: 1
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 70

@@ -1,0 +1,9 @@
+---
+- name: Upload SSH to Host
+  hosts: all
+  tasks:
+    - name: Set authorized key taken from file
+      authorized_key:
+        user: solar
+        state: present
+        key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/id_rsa.pub') }}"
