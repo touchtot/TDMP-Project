@@ -3,26 +3,26 @@
   tasks:
      - name: Copy File From Host
        copy:
-        src: /tmp/node_exporter-1.0.1.linux-amd64.tar.gz
-        dest: /home/pamuser
+        src: /mnt/d/Git/node_exporter-1.0.1.linux-amd64.tar.gz
+        dest: /home/cdnedge
         mode: "0777"
         remote_src: no
      - name: Extract files
        unarchive:
-        src: /home/pamuser/node_exporter-1.0.1.linux-amd64.tar.gz
-        dest: /home/pamuser
+        src: /home/cdnedge/node_exporter-1.0.1.linux-amd64.tar.gz
+        dest: /home/cdnedge
         mode: "0777"
+        remote_src: yes
      - name: Move extracted files
-       command: mv -f /home/pamuser/node_exporter-1.0.1.linux-amd64 /var/lib/node_exporter
+       command: mv -f /home/cdnedge/node_exporter-1.0.1.linux-amd64 /var/lib/node_exporter
        args:
         creates: /var/lib/node_exporter
      - name: Create a systemd service for node_exporter
        file:
         path: /etc/systemd/system/node_exporter.service
         state: touch
-        owner: root
-        group: root
-        mode: "0700"
+        owner: cdnedge
+        mode: "0777"
      - name: Edit Text in File
        blockinfile:
         path: /etc/systemd/system/node_exporter.service
@@ -33,7 +33,7 @@
          After=network-online.target
 
          [Service]
-         User=root
+         User=cdnedge
          Type=simple
          ExecStart=/var/lib/node_exporter/node_exporter
 
@@ -48,9 +48,5 @@
        firewalld:
          port: 9100/tcp
          permanent: yes
+         immediate: yes
          state: enabled
-     - name: Stop Zabbix Service
-       service:
-         name: zabbix-agent
-         state: stopped
-         enabled: no
