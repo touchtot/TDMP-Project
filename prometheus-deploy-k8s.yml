@@ -1,0 +1,104 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: prometheus-k8s
+rules:
+- apiGroups: [""]
+  resources:
+  - nodes
+  - nodes/proxy
+  - services
+  - endpoints
+  - pods
+  verbs: ["get", "list", "watch"]
+- apiGroups:
+  - extensions
+  resources:
+  - ingresses
+  verbs: ["get", "list", "watch"]
+- nonResourceURLs: ["/metrics"]
+  verbs: ["get"]
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: prometheus-k8s
+  namespace: monitoring
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: prometheus-k8s
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: prometheus-k8s
+subjects:
+- kind: ServiceAccount
+  name: prometheus-k8s
+  namespace: monitoring
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prometheus-deploy-k8s
+  namespace: monitoring
+  labels:
+    app: prometheus-k8s
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: prometheus-k8s
+  template:
+    metadata:
+      labels:
+        app: prometheus-k8s
+    spec:
+      serviceAccountName: prometheus-k8s
+      containers:
+      - name: prometheus-k8s
+        image: prom/prometheus:v2.20.0
+        ports:
+          - containerPort: 9090
+        volumeMounts:
+          - name: prom-config
+            mountPath: /etc/prometheus
+          - name: prom-data
+            mountPath: /prometheus
+      volumes:
+        - name: prom-config
+          persistentVolumeClaim:
+            claimName: prom-pvc-k8s
+        - name: prom-data
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: prometheus-service-k8s
+  namespace: monitoring
+  labels:
+    app: prometheus-k8s
+spec:
+  type: ClusterIP
+  selector:
+    app: prometheus-k8s
+  ports:
+    - protocol: TCP
+      port: 9090
+      targetPort: 9090
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: prometheus-deploy-k8s
+  namespace: monitoring
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: prometheus-deploy-k8s
+  minReplicas: 1
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 70

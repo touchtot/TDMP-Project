@@ -1,0 +1,58 @@
+all:
+  hosts:
+    d3p-ssmas01:
+      ansible_host: 10.28.148.39
+      ip: 10.28.148.39
+      access_ip: 10.28.148.39
+    d3p-ssmas02:
+      ansible_host: 10.28.148.40
+      ip: 10.28.148.40
+      access_ip: 10.28.148.40
+    d3p-ssmas03:
+      ansible_host: 10.28.148.41
+      ip: 10.28.148.41
+      access_ip: 10.28.148.41
+    d3p-ssmas04:
+      ansible_host: 10.28.148.42
+      ip: 10.28.148.42
+      access_ip: 10.28.148.42
+    d3p-sswork01:
+      ansible_host: 10.28.148.31
+      ip: 10.28.148.31
+      access_ip: 10.28.148.31
+    d3p-sswork02:
+      ansible_host: 10.28.148.32
+      ip: 10.28.148.32
+      access_ip: 10.28.148.32
+    d3p-sswork03:
+      ansible_host: 10.28.148.33
+      ip: 10.28.148.33
+      access_ip: 10.28.148.33
+    d3p-sswork04:
+      ansible_host: 10.28.148.34
+      ip: 10.28.148.34
+      access_ip: 10.28.148.34
+  children:
+    kube-master:
+      hosts:
+        d3p-ssmas01:
+        d3p-ssmas02:
+        d3p-ssmas03:
+        d3p-ssmas04:
+    kube-node:
+      hosts:
+        d3p-sswork01:
+        d3p-sswork02:
+        d3p-sswork03:
+        d3p-sswork04:
+    etcd:
+      hosts:
+        d3p-ssmas01:
+        d3p-ssmas02:
+        d3p-ssmas03:
+    k8s-cluster:
+      children:
+        kube-master:
+        kube-node:
+    calico-rr:
+      hosts: {}

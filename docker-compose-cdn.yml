@@ -1,0 +1,13 @@
+version: '3'
+services:
+  prometheus_cdn:
+    image: prom/prometheus:v2.12.0
+    container_name: prometheus_cdn
+    volumes:
+      - ./prometheus_nodeexportor.yml:/etc/prometheus/prometheus.yml
+      - /var/data/prometheus_nodeexportor/:/prometheus/:rw
+    command:
+     - '--config.file=/etc/prometheus/prometheus.yml'
+     - '--storage.tsdb.retention.time=365d'
+    ports:
+     - "9090:9090"

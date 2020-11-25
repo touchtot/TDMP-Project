@@ -1,0 +1,159 @@
+global:
+  scrape_interval: 60s
+  scrape_timeout: 60s
+scrape_configs:
+  - job_name: 'FingerPrint'
+    static_configs:
+     - targets: ['10.18.12.199:9100']
+
+  - job_name: 'CDN Manage'
+    static_configs:
+     - targets: ['10.18.12.106:9100']
+    
+  - job_name: 'Blackout:DB'
+    static_configs:
+     - targets: ['10.18.12.105:9100']
+
+  - job_name: 'CCU system'
+    static_configs:
+     - targets: ['10.18.12.235:9100']
+
+  - job_name: 'Geo Service INTER'
+    static_configs:
+     - targets: ['10.18.143.29:9100','10.18.143.30:9100','10.18.143.31:9100','10.18.143.32:9100']
+
+  - job_name: 'Geo Service'
+    static_configs:
+     - targets: ['10.18.12.128:9100','10.18.12.129:9100']
+  
+  - job_name: 'GeoTrueID:GeoTrueID'
+    static_configs:
+     - targets: ['10.18.12.130:9100','10.18.12.131:9100','10.18.12.132:9100']
+
+  - job_name: 'GeoTrueID:ReversProxy'
+    static_configs:
+     - targets: ['10.18.12.133:9100','10.18.12.134:9100']
+
+  - job_name: 'Geo iService'
+    static_configs:
+     - targets: ['10.18.12.160:9100','10.18.12.161:9100']
+
+  - job_name: 'HCCU GWN'
+    static_configs:
+     - targets: ['10.18.12.141:9100','10.18.12.142:9100','10.18.12.144:9100','10.18.80.204:9100','10.18.80.205:9100','10.18.80.206:9100','10.18.12.145:9100','10.18.12.146:9100']
+
+  - job_name: 'HCCU INTER GWN'
+    static_configs:
+     - targets: ['10.18.143.21:9100','10.18.143.22:9100']
+
+  - job_name: 'Thumbnail '
+    static_configs:
+     - targets: ['10.18.12.224:9100','10.18.12.225:9100','10.18.12.222:9100',10.18.12.223:9100']
+
+  - job_name: 'iStreaming'
+    static_configs:
+     - targets: ['10.18.12.73:9100','10.18.12.74:9100','10.18.12.75:9100','10.18.12.76:9100','10.18.12.77:9100','10.18.12.69:9100','10.18.12.70:9100']
+
+  - job_name: 'KD'
+    static_configs:
+     - targets: ['10.18.12.111:9100','10.18.12.112:9100','10.18.12.113:9100','10.18.12.114:9100','10.18.12.115:9100','10.18.12.116:9100','10.18.12.117:9100','10.18.12.118:9100','10.18.12.119:9100','10.18.12.120:9100','10.18.12.121:9100','10.18.12.122:9100','10.18.12.123:9100','10.18.19.124:9100','10.18.12.125:9100']
+
+  - job_name: 'KD:Redis'
+    static_configs:
+     - targets: ['10.18.12.126:9100','10.18.12.127:9100']
+
+  - job_name: 'SP INTER GWN'
+    static_configs:
+     - targets: ['10.18.143.11:9100','10.18.143.12:9100','10.18.143.14:9100','10.18.143.15:9100']
+
+  - job_name: 'SP2 MTG'
+    static_configs:
+     - targets: ['10.18.12.85:9100','10.18.12.86:9100','10.18.12.46:9100','10.18.12.47:9100']
+
+  - job_name: 'SP2 TT2'
+    static_configs:
+     - targets: ['10.18.141.188:9100','10.18.141.189:9100','10.18.141.190:9100','10.18.141.191:9100']
+
+  - job_name: 'SP3 MTG'
+    static_configs:
+     - targets: ['10.18.12.147:9100','10.18.12.148:9100','10.18.12.149:9100','10.18.12.150:9100','10.18.12.48:9100','10.18.12.137:9100','10.18.12.138:9100']
+
+  - job_name: 'SP3 TT2'
+    static_configs:
+     - targets: ['10.18.141.181:9100','10.18.141.182:9100','10.18.141.183:9100','10.18.141.184:9100','10.18.141.185:9100','10.18.141.186:9100','10.18.141.187:9100']
+
+  - job_name: 'SP Redis TT2'
+    static_configs:
+     - targets: ['10.18.141.192:9100','10.18.141.193:9100','10.18.141.194:9100','10.18.141.195;9100','10.18.141.196:9100','10.18.141.197:9100','10.18.141.201:9100']
+
+  - job_name: 'SP Redis MTG'
+    static_configs:
+     - targets: ['10.18.12.153:9100','10.18.12.98:9100','10.18.12.99:9100','10.18.14.48:9100','10.18.14.49:9100','10.18.14.50:9100','10.18.12.191:9100']
+
+  - job_name: 'Redis'
+    static_configs:
+     - targets: ['10.18.12.96:9100','10.18.12.97:9100']
+
+  - job_name: 'Common Service TT2'
+    static_configs:
+     - targets: ['10.18.141.203:9100','10.18.141.204:9100']
+
+  - job_name: 'Common Service MTG'
+    static_configs:
+     - targets: ['10.18.14.40:9100','10.18.12.71:9100']
+
+  - job_name: 'WIDEVINE PROXY'
+    static_configs:
+     - targets: ['10.18.12.107:9100','10.18.12.108:9100','10.18.12.109:9100']
+
+  - job_name: 'WIDEVINE STB'
+    static_configs:
+     - targets: ['10.18.14.195:9100','10.18.12.196:9100','10.18.12.197:9100']
+
+  - job_name: 'Redis GWN'
+    static_configs:
+     - targets: ['10.18.143.17:9100','10.18.143.18:9100','10.18.143.19:9100','10.18.143.20:9100']
+
+  - job_name: 'Common API'
+    static_configs:
+     - targets: ['10.18.143.27:9100','10.18.143.28:9100']
+
+  - job_name: 'KD GWN'
+    static_configs:
+     - targets: ['10.18.143.13:9100','10.18.143.16:9100','10.18.143.24:9100','10.18.143.25:9100','10.18.143.26:9100']
+
+  - job_name: 'MGMT Guest'
+    static_configs:
+     - targets: ['10.18.143.35:9100']
+
+  - job_name: 'Live Mapping'
+    static_configs:
+    - targets: ['10.18.14.61:9100']
+
+  - job_name: 'New KD'
+    static_configs:
+     - targets: ['10.18.80.242:9100','10.18.83.56:9100','10.18.83.57:9100','10.18.83.58:9100']
+
+  - job_name: 'Checker TT2'
+    static_configs:
+    - targets: ['10.18.141.205:9100','10.18.141.206:9100']
+
+  - job_name: 'Checker MTG'
+    static_configs:
+    - targets: ['10.18.14.243:9100','10.18.14.244:9100']
+
+  - job_name: 'Widevine INDO'
+    static_configs:
+    - targets: ['10.18.143.57:9100','10.18.143.58:9100']
+
+  - job_name: 'Fairplay INDO'
+    static_configs:
+    - targets: ['10.18.143.59:9100','10.18.143.60:9100']
+
+  - job_name: 'Concurrent'
+    static_configs:
+    - targets: ['10.18.83.116:9100','10.18.83.117:9100','10.18.83.118:9100','10.18.83.119:9100']
+
+  - job_name: 'Concurrent:Redis'
+    static_configs:
+    - targets: ['10.18.83.120:9100']

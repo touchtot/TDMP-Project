@@ -1,29 +1,27 @@
 ---
 - hosts: all
-  remote_user: sysreport
   tasks:
      - name: Copy File From Host
        copy:
-        src: /tmp/node_exporter-0.18.1.linux-amd64.tar.gz
-        dest: /tmp
+        src: /mnt/d/Git/node_exporter-1.0.1.linux-amd64.tar.gz
+        dest: /$HOME/
         mode: "0777"
         remote_src: no
      - name: Extract files
        unarchive:
-        src: /tmp/node_exporter-0.18.1.linux-amd64.tar.gz
-        dest: /tmp
+        src: /$HOME/node_exporter-1.0.1.linux-amd64.tar.gz
+        dest: /$HOME
         mode: "0777"
+        remote_src: yes
      - name: Move extracted files
-       command: mv -f /tmp/node_exporter-0.18.1.linux-amd64 /var/lib/node_exporter
+       command: mv -f /$HOME/node_exporter-1.0.1.linux-amd64 /var/lib/node_exporter
        args:
         creates: /var/lib/node_exporter
      - name: Create a systemd service for node_exporter
        file:
         path: /etc/systemd/system/node_exporter.service
         state: touch
-        owner: root
-        group: root
-        mode: "0700"
+        mode: "0777"
      - name: Edit Text in File
        blockinfile:
         path: /etc/systemd/system/node_exporter.service
@@ -34,7 +32,6 @@
          After=network-online.target
 
          [Service]
-         User=root
          Type=simple
          ExecStart=/var/lib/node_exporter/node_exporter
 
@@ -48,10 +45,7 @@
      - name: Firewalld Add Port
        firewalld:
          port: 9100/tcp
+         zone: internal
          permanent: yes
+         immediate: yes
          state: enabled
-     - name: Stop Zabbix Service
-       service:
-         name: zabbix-agent
-         state: stopped
-         enabled: no
