@@ -2,8 +2,8 @@ pipeline {
   environment {
     /*k8sCredential = 'k8s-jojoe'*/
     registryUrl = "https://harbor.touchzlab.com"
-    registry = "harbor.touchzlab/docker/"
-    registryCredential = 'touchzlab'
+    registry = "harbor.touchzlab.com/touchzlab/"
+    registryCredential = 'admin'
     dockerImage = ''
     DOCKER_TAG = getDockerTag()
   }
