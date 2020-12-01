@@ -3,7 +3,7 @@ pipeline {
     /*k8sCredential = 'k8s-jojoe'*/
     registryUrl = "https://harbor.touchzlab.com"
     registry = "harbor.touchzlab.com/touchzlab/"
-    registryCredential = 'admin'
+    registryCredential = 'harbor-admin'
     dockerImage = ''
     DOCKER_TAG = getDockerTag()
   }
@@ -19,7 +19,7 @@ pipeline {
       steps{
         script {         
           echo "touchzlab --> ${DOCKER_TAG}"
-          dockerImage = docker.build registry + ":$BUILD_NUMBER"
+          dockerImage = docker.build registry + ":v1.0.0"
         }
       }
     }
