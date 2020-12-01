@@ -2,10 +2,9 @@ pipeline {
   environment {
     /*k8sCredential = 'k8s-jojoe'*/
     registryUrl = "https://harbor.touchzlab.com"
-    registry = "harbor.touchzlab.com/touchzlab/"
+    registry = "harbor.touchzlab.com/touchzlab/ez"
     registryCredential = 'harbor-admin'
     dockerImage = ''
-    DOCKER_TAG = getDockerTag()
   }
   agent any
   stages {
@@ -34,9 +33,5 @@ pipeline {
         }
       }
     }
-  }
-    def getDockerTag(){
-    def tag  = sh script: 'git rev-parse HEAD', returnStdout: true
-    return tag
   }
 }
