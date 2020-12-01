@@ -13,7 +13,7 @@ pipeline {
       steps{
         script {         
           echo "touchzlab --> ${DOCKER_TAG}"
-          dockerImage = docker.build registry + ":v1.0.0"
+          dockerImage = docker.build registry + ":$BUILD_NUMBER"
         }
       }
     }
@@ -49,5 +49,4 @@ pipeline {
 def getDockerTag(){
     def tag  = sh script: 'git rev-parse HEAD', returnStdout: true
     return tag
- }
 }
