@@ -5,14 +5,13 @@ pipeline {
     registry = "harbor.touchzlab.com/touchzlab/"
     registryCredential = 'harbor-admin'
     dockerImage = ''
-    DOCKER_TAG = getDockerTag()
   }
   agent any
   stages {
     stage('Building Image') {
       steps{
         script {         
-          echo "touchzlab --> ${DOCKER_TAG}"
+          /*echo "touchzlab --> ${DOCKER_TAG}"*/
           dockerImage = docker.build registry + ":$BUILD_NUMBER"
         }
       }
@@ -33,10 +32,5 @@ pipeline {
         sh "docker rmi -f $registry:$BUILD_NUMBER"
       }
     }
-  }
-}
-    def getDockerTag(){
-    def tag  = sh script: 'git rev-parse HEAD', returnStdout: true
-    return tag
   }
 }
