@@ -3,7 +3,7 @@ pipeline {
     /*k8sCredential = 'k8s-jojoe'*/
     registryUrl = "https://harbor.touchzlab.com"
     registry = "harbor.touchzlab.com/touchzlab/"
-    registryCredential = 'admin'
+    registryCredential = 'harbor-admin'
     dockerImage = ''
     DOCKER_TAG = getDockerTag()
   }
@@ -11,7 +11,7 @@ pipeline {
   stages {
     stage('Checkout Source') {
       steps {
-        git url:'https://github.com/touchtot/TDMP-Project.git', branch:'master'
+        git url:'https://github.com/touchtot/TDMP-Project.git', branch:'dev'
       }
     }
   stages {
@@ -52,7 +52,6 @@ pipeline {
     }
   }
 }
-
 def getDockerTag(){
     def tag  = sh script: 'git rev-parse HEAD', returnStdout: true
     return tag
