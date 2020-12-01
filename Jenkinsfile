@@ -27,21 +27,10 @@ pipeline {
         }
       }
     }
-	  stage('Deployment K8s Dev') {
-      steps {
-        script {
-        /*sh "sed -i 's/tagversion/${BUILD_NUMBER}/g' prometheus-deploy-v1.yaml"
-        withKubeCredentials(kubectlCredentials: [[caCertificate: '', clusterName: 'touchzlab.k8s.local', contextName: 'kubernetes-admin@k8scluster.local', credentialsId: 'k8s-jojoe2', namespace: "", serverUrl: 'https://192.168.10.10:6443']]) {
-             sh 'kubectl apply -f prometheus-deploy-v1.yaml --record' */
-          echo "Skipped"
-        }
-      }
-    }
     stage('Remove Unused docker image') {
       steps{
         script {
-        /*sh "docker rmi -f $registry:$BUILD_NUMBER"*/
-          echo "Skipped"
+        sh "docker rmi -f $registry:$BUILD_NUMBER"
       }
     }
   }
