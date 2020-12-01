@@ -5,6 +5,7 @@ pipeline {
     registry = "harbor.touchzlab.com/touchzlab/"
     registryCredential = 'harbor-admin'
     dockerImage = ''
+    DOCKER_TAG = getDockerTag()
   }
   agent any
   stages {
@@ -33,5 +34,9 @@ pipeline {
         }
       }
     }
+  }
+  def getDockerTag(){
+    def tag  = sh script: 'git rev-parse HEAD', returnStdout: true
+    return tag
   }
 }
