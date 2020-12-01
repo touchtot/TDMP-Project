@@ -9,12 +9,6 @@ pipeline {
   }
   agent any
   stages {
-    stage('Checkout Source') {
-      steps {
-        git url:'https://github.com/touchtot/TDMP-Project.git', branch:'master'
-      }
-    }
-  stages {
     stage('Building Image') {
       steps{
         script {         
