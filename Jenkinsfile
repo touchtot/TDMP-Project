@@ -30,6 +30,7 @@ pipeline {
       steps{
         script {
         sh "docker rmi -f $registry:$BUILD_NUMBER"
+        }
       }
     }
   }
