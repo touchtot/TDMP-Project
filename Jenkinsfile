@@ -27,6 +27,13 @@ pipeline {
         }
       }
     }
+    stage('Run Test Image') {
+      steps{
+        script {
+          sh "docker run -d -p 80:80 $registry:$BUILD_NUMBER"
+        }
+      }
+    } 
     stage('Remove Unused docker image') {
       steps{
         script {
