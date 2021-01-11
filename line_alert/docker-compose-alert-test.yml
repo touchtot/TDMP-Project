@@ -1,0 +1,37 @@
+version: '3'
+services:
+    prometheus:
+        image: prom/prometheus:v2.22.0
+        volumes:
+            - /prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+            - /prometheus/alert.rules:/etc/prometheus/alert.rules
+        command:
+            - '--config.file=/etc/prometheus/prometheus.yml'
+            - '--storage.tsdb.path=/prometheus'
+            - '--storage.tsdb.retention=30d'
+        ports:
+            - 9090:9090
+        restart: always
+    alertmanager:
+        image: prom/alertmanager:v0.20.0
+        volumes:
+            - /prometheus/alertmanager.yml:/etc/alertmanager/config.yml
+        command:
+            - '--config.file=/etc/alertmanager/config.yml'
+            - '--storage.path=/alertmanager'
+            - '--log.level=info'
+            - '--web.external-url=http://10.18.14.148:9093'
+        ports:
+            - 9093:9093
+        restart: always
+    line-notify-gateway:
+        image: nontster/line-notify-gateway:0.1.4
+        environment:
+            - line-notify.personal-access-token=m9URTPi7qe8WKrSYDbNamBXuvMBN0aijiehX0aq5Hzj
+            - logging.path=/logs/line-notify-gateway.log
+            - logging.level.ROOT=INFO
+            - HTTP_PROXY=http://10.18.12.110:80
+            - HTTPS_PROXY=http://10.18.12.110:80
+        ports:
+            - 18081:18081
+        restart: always

@@ -1,0 +1,12 @@
+global:
+route:
+    group_by: [alertname]
+    receiver: 'line-notify-gateway'
+    group_wait: 30s
+    group_interval: 5m
+    repeat_interval: 1h
+receivers:
+    - name: 'line-notify-gateway'
+      webhook_configs:
+        - url: http://10.18.14.148:18081/v1/alertmanager/payload
+          send_resolved: true

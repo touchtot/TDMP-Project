@@ -1,0 +1,15 @@
+#BOOT-INF/classes/templates/alertmanager/firing.mustache#
+{{groupLabels.alertname}}
+Status : {{commonLabels.severity}}
+{{#alerts}}
+Description : {{annotations.description}}
+Summary : {{annotations.summary}}
+{{/alerts}}
+------------------------------------------------------------
+#BOOT-INF/classes/templates/alertmanager/resolved.mustache#
+{{startsAt}}
+[OK] {{groupLabels.alertname}}
+Status : {{status}}
+{{#alerts}}
+Description : {{annotations.resolved}}
+{{/alerts}}

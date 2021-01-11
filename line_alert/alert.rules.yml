@@ -1,0 +1,30 @@
+groups:
+- name: Node Down
+  rules:
+  - alert: Node is Down
+    expr: up * on (instance) group_left (nodename) (node_uname_info) == 0
+    for: 5m
+    labels:
+      severity: citical
+    annotations:
+      summary: "Node {{ $labels.nodename }} is down"
+- name: Memory-usage
+  rules:
+  - alert: High Memory Usage
+    expr: round((((node_memory_MemTotal_bytes - node_memory_MemFree_bytes - node_memory_Buffers_bytes - node_memory_Cached_bytes) / node_memory_MemTotal_bytes) * 100 * on (instance) group_left (nodename) (node_uname_info))) > 10  
+    labels:
+      severity: warning
+    annotations:
+      description: "Memory load is more 80%"
+      summary: "{{ $labels.nodename }} Memory usage is {{ $value | humanize }}%"
+      resolved: "{{ $labels.nodename }} Memory usage has been resolved"
+- name: CPU-usage
+  rules:
+  - alert: High CPU Usage
+    expr: 100 - (avg by(instance) (rate(node_cpu_seconds_total{mode="idle"}[2m]))) * 100 * on (instance) group_left (nodename) (node_uname_info) > 50
+    labels:
+      severity: warning
+    annotations:
+      description: "CPU load is more 50%"
+      summary: "{{ $labels.nodename }} CPU usage is {{ $value | humanize }}%"
+      resolved: "{{ $labels.nodename }} CPU usage has been resolved"
