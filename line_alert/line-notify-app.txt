@@ -7,7 +7,6 @@ Summary : {{annotations.summary}}
 {{/alerts}}
 ------------------------------------------------------------
 #BOOT-INF/classes/templates/alertmanager/resolved.mustache#
-{{startsAt}}
 [OK] {{groupLabels.alertname}}
 Status : {{status}}
 {{#alerts}}
