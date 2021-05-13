@@ -1,0 +1,10 @@
+#The namespace in which all the components should be installed 
+namespace: kube-monitoring
+
+#The order in which the Kubernetes resources should be installed 
+resources:
+- namespace.yml
+- kube-state-metrics.yml
+- prometheus-sts.yml
+- node-exporter.yml
+- configmap.yml
