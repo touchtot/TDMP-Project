@@ -140,7 +140,7 @@ metadata:
   annotations:
     prometheus.io/scrape: 'true'
 spec:
-  type: Nodeport
+  type: NodePort
   selector:
     name: prometheus
   ports:
