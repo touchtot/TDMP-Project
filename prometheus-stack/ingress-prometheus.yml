@@ -10,4 +10,4 @@ spec:
       paths:
       - backend:
           serviceName: prometheus
-          servicePort: 80
+          servicePort: 9090
