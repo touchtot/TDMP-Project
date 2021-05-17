@@ -1,17 +1,17 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: prom-pv
-  namespace: monitoring
+  name: stm-prometheus-nfs-pv
+  namespace: lens-metrics
 spec:
   capacity:
-    storage: 1Gi
+    storage: 100Gi
   volumeMode: Filesystem
   accessModes:
     - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
   storageClassName: standard
   nfs:
-    path: /data
-    server: 192.168.10.10
+    path: /tt2_share_streaming_service/k8s-data/prometheus-data
+    server: TT2-QUMULO-STM
     readOnly: false
